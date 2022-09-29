@@ -2,3 +2,33 @@
 #
 # Documentation for this file format can be found in "The Data Catalog"
 # Link: https://kedro.readthedocs.io/en/stable/data/data_catalog.html
+Data_raw:
+  type: pandas.CSVDataSet
+  filepath: data/01_raw/data_raw_csv.csv
+  layer: raw
+
+data_preprocessed:
+  type: pandas.CSVDataSet
+  filepath: data/02_intermediate/data_preprocessed.csv
+  layer: primary
+
+
+x_train:
+  type: pandas.CSVDataSet
+  filepath: data/02_intermediate/x_train.csv
+  layer: primary
+
+x_test:
+  type: pandas.CSVDataSet
+  filepath: data/02_intermediate/x_test.csv
+  layer: primary
+
+y_train:
+  type: pandas.CSVDataSet
+  filepath: data/02_intermediate/y_train.csv
+  layer: primary
+
+y_test:
+  type: pandas.CSVDataSet
+  filepath: data/02_intermediate/y_test.csv
+  layer: primary
