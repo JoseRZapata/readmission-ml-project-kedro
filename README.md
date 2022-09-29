@@ -25,6 +25,10 @@ To install them, run:
 pip install -r src/requirements.txt
 ```
 
+## Set up IDE tools
+- Vscode https://kedro.readthedocs.io/en/stable/development/set_up_vscode.html
+- Pycharm https://kedro.readthedocs.io/en/stable/development/set_up_pycharm.html
+
 ## How to run your Kedro pipeline
 
 You can run your Kedro project with:
