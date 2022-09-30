@@ -34,10 +34,6 @@ def pre_processing(x: pd.DataFrame,
     data = pd.concat([x,y],axis=1)
 
     pipe_functions = [
-                ('filter_discharge_col',FunctionTransformer(filter_cols_values,
-                                                    kw_args={'filter_col':'discharge_disposition_id',
-                                                    'filter_values':[11, 13, 14, 19, 20]}
-                                                )),
                 ('remove_nan_rows_diag1',FunctionTransformer(filter_cols_values,
                                                     kw_args={'filter_col':'diag_1',
                                                     'filter_values':[np.nan]}
@@ -103,8 +99,8 @@ def data_type_split(data: pd.DataFrame, parameters: Dict[str, Any]):
         numerical_cols = parameters['numerical_cols']
         categorical_cols = parameters['categorical_cols']
     else:
-        numerical_cols = make_column_selector(dtype_include=np.numeric)(data)
-        categorical_cols = make_column_selector(dtype_exclude=np.numeric)(data)
+        numerical_cols = make_column_selector(dtype_include=np.number)(data)
+        categorical_cols = make_column_selector(dtype_exclude=np.number)(data)
     mlflow.log_param('num_cols', numerical_cols)
     mlflow.log_param('cat_cols', categorical_cols)
 
@@ -206,16 +202,6 @@ def to_categorical(data: pd.DataFrame, categorical_cols: list) -> pd.DataFrame:
     for x in categorical_cols:
         data[x] = data[x].astype('category')
     return data    
-
-
-# function to filter data from a column if is in a list of values
-def filter_cols_values(data: pd.DataFrame,
-                       filter_col: str,
-                       filter_values: list) -> pd.DataFrame:
-    """Filter columns from data."""
-    data = data[~data[filter_col].isin(filter_values)]
-    return data
-
 
 
 # function to fillna with a string in a column
@@ -373,3 +359,10 @@ def process_medical_specialty(data: pd.DataFrame) -> pd.DataFrame:
 
     return data 
 
+# function to filter data from a column if is in a list of values
+def filter_cols_values(data: pd.DataFrame,
+                       filter_col: str,
+                       filter_values: list) -> pd.DataFrame:
+    """Filter columns from data."""
+    data = data[~data[filter_col].isin(filter_values)]
+    return data
