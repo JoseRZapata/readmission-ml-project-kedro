@@ -21,6 +21,8 @@ from deepchecks.tabular.suites import train_test_validation
 import great_expectations as ge
 from great_expectations.checkpoint.types.checkpoint_result import CheckpointResult
 
+from feature_engine.selection import DropConstantFeatures, DropDuplicateFeatures
+
 logger = logging.getLogger(__name__)
 
 
@@ -52,6 +54,7 @@ def etl_processing(data: pd.DataFrame,
 
     data = (data
             .replace('?', np.nan)
+            .pipe(transform_output)
             .pipe(sort_data, col = 'readmitted')
             .pipe(drop_duplicates, drop_cols=['patient_nbr'])
     )
@@ -65,28 +68,23 @@ def etl_processing(data: pd.DataFrame,
     target = parameters['target_column']
     columns.append(target)
 
-    pipe_functions = []
+    
+
+    pipe_functions = [
+        ('drop_constant_values', DropConstantFeatures(tol=1, missing_values= 'ignore')),
+        ('drop_duplicates', DropDuplicateFeatures(missing_values= 'ignore'))                
+    ]
+    # get methods name for experimentation tracking
     methods = []
-
-    for x in parameters['data_train_transforms']:
-        lib: str = x['lib']
-        name: str = x['name']
-        method: str = x['method']
-        params: str = x['params']
-        methods.append((method, params))
-
-        class_lib = importlib.import_module(lib)
-        pipe_functions.append((name, getattr(class_lib, method)(**params)))
+    for name, _ in pipe_functions:
+        methods.append(name)
 
     mlflow.log_param('etl_transforms', methods)
 
     pipeline_train_data = Pipeline(steps=pipe_functions)
+    #apply transformation to data
     data_transformed = pipeline_train_data.fit_transform(data)
 
-    data_transformed = (data_transformed
-                        .pipe(sort_data, col = 'readmitted')
-                        .pipe(drop_duplicates, drop_cols=['patient_nbr'])
-    )
     mlflow.log_param("shape data etl", data_transformed.shape)
     return data_transformed
 
@@ -185,6 +183,15 @@ def train_test_validation_dataset(x_train,
     return x_train, x_test, y_train, y_test
 
 # --- help functions -------
+def transform_output(data: pd.DataFrame) -> pd.DataFrame:
+    """ Replace target column to 1 and 0 values"""
+
+    data["readmitted"].replace({'<30':1,
+                                '>30':0,
+                                'NO':0},
+                                inplace=True)
+    return data
+
 def sort_data(data: pd.DataFrame, col: str) -> pd.DataFrame:
     "Sort data by and specific column"
     data = data.sort_values(by=col,ascending= False)

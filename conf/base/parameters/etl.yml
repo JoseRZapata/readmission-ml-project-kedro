@@ -83,7 +83,6 @@ categorical_cols:
 
 numerical_cols:
   - time_in_hospital
-  - medical_specialty
   - num_lab_procedures
   - num_procedures
   - num_medications
@@ -95,19 +94,3 @@ numerical_cols:
 split:
   test_size: 0.2
   random_state: 3
-
-
-# pattern: lib module, human_name, method, {method_parameters}
-data_train_transforms:
-# drop columns that have the same values        -
-  - lib: feature_engine.selection
-    name: drop_constant_values
-    method: DropConstantFeatures
-    params:
-      tol: 1 
-      missing_values: ignore
-  - lib: feature_engine.selection
-    name: drop_duplicates
-    method: DropDuplicateFeatures
-    params:
-      missing_values: ignore

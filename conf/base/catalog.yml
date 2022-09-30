@@ -32,3 +32,13 @@ y_test:
   type: pandas.CSVDataSet
   filepath: data/02_intermediate/y_test.csv
   layer: primary
+
+x_train_out:
+  type: pandas.CSVDataSet
+  filepath: data/03_primary/x_train.csv
+  layer: primary
+
+y_train_out:
+  type: pandas.CSVDataSet
+  filepath: data/03_primary/y_train.csv
+  layer: primary    
