@@ -57,6 +57,10 @@ def etl_processing(data: pd.DataFrame,
             .pipe(transform_output)
             .pipe(sort_data, col = 'readmitted')
             .pipe(drop_duplicates, drop_cols=['patient_nbr'])
+            .pipe(filter_cols_values, 
+                  filter_col ='discharge_disposition_id',
+                  filter_values = [11, 13, 14, 19, 20])
+            .dropna(subset= ['diag_1'])
     )
 
     # convert this step as a scikit-learn transformer
@@ -203,3 +207,12 @@ def drop_duplicates(data: pd.DataFrame,
     """Drop duplicate rows from data."""
     data = data.drop_duplicates(subset=drop_cols, keep='first')    
     return data
+
+# function to filter data from a column if is in a list of values
+def filter_cols_values(data: pd.DataFrame,
+                       filter_col: str,
+                       filter_values: list) -> pd.DataFrame:
+    """Filter columns from data."""
+    data = data[~data[filter_col].isin(filter_values)]
+    return data
+          
