@@ -2,3 +2,78 @@
 #
 # Documentation for this file format can be found in "The Data Catalog"
 # Link: https://kedro.readthedocs.io/en/stable/data/data_catalog.html
+Data_raw:
+  type: pandas.CSVDataSet
+  filepath: data/01_raw/data_raw_csv.csv
+  layer: raw
+
+data_preprocessed:
+  type: pandas.CSVDataSet
+  filepath: data/02_intermediate/data_preprocessed.csv
+  layer: primary
+
+
+x_train:
+  type: pandas.CSVDataSet
+  filepath: data/02_intermediate/x_train.csv
+  layer: primary
+
+x_test:
+  type: pandas.CSVDataSet
+  filepath: data/02_intermediate/x_test.csv
+  layer: primary
+
+y_train:
+  type: pandas.CSVDataSet
+  filepath: data/02_intermediate/y_train.csv
+  layer: primary
+
+y_test:
+  type: pandas.CSVDataSet
+  filepath: data/02_intermediate/y_test.csv
+  layer: primary
+
+x_train_out:
+  type: pandas.CSVDataSet
+  filepath: data/03_primary/x_train.csv
+  layer: primary
+
+y_train_out:
+  type: pandas.CSVDataSet
+  filepath: data/03_primary/y_train.csv
+  layer: primary
+
+
+column_transformers_pipeline:
+  type: pickle.PickleDataSet
+  filepath: data/04_feature/transformers_pipeline.pkl
+  backend: pickle
+  layer: feature
+
+x_train_model_input:
+  type: pickle.PickleDataSet
+  filepath: data/05_model_input/x_train_model_input.pkl
+  backend: pickle
+  layer: model input
+
+y_train_model_input:
+    type: pickle.PickleDataSet
+    filepath: data/05_model_input/y_train_model_input.pkl
+    backend: pickle
+    layer: model input
+    
+model_trained:
+  type: pickle.PickleDataSet
+  filepath: data/06_models/titanic.pkl
+  backend: pickle
+  layer: models
+
+score_train:
+  type: kedro.extras.datasets.text.TextDataSet
+  filepath: data/07_model_output/train_score.txt
+  layer: model output
+
+score_test:
+  type: kedro.extras.datasets.text.TextDataSet
+  filepath: data/07_model_output/test_score.txt
+  layer: model output          
