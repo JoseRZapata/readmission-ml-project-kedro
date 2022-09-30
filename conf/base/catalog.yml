@@ -41,4 +41,39 @@ x_train_out:
 y_train_out:
   type: pandas.CSVDataSet
   filepath: data/03_primary/y_train.csv
-  layer: primary    
+  layer: primary
+
+
+column_transformers_pipeline:
+  type: pickle.PickleDataSet
+  filepath: data/04_feature/transformers_pipeline.pkl
+  backend: pickle
+  layer: feature
+
+x_train_model_input:
+  type: pickle.PickleDataSet
+  filepath: data/05_model_input/x_train_model_input.pkl
+  backend: pickle
+  layer: model input
+
+y_train_model_input:
+    type: pickle.PickleDataSet
+    filepath: data/05_model_input/y_train_model_input.pkl
+    backend: pickle
+    layer: model input
+    
+model_trained:
+  type: pickle.PickleDataSet
+  filepath: data/06_models/titanic.pkl
+  backend: pickle
+  layer: models
+
+score_train:
+  type: kedro.extras.datasets.text.TextDataSet
+  filepath: data/07_model_output/train_score.txt
+  layer: model output
+
+score_test:
+  type: kedro.extras.datasets.text.TextDataSet
+  filepath: data/07_model_output/test_score.txt
+  layer: model output          
