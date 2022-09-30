@@ -44,10 +44,10 @@ def model_evaluation_check(x_train: np.ndarray,
 
     evaluation_suite = model_evaluation()
     suite_result = evaluation_suite.run(train_ds, test_ds, model)
+    mlflow.set_experiment('readmission')
     mlflow.log_param(f"model evaluation validation", str(suite_result.passed()))
     if not suite_result.passed():
         #save report in data/08_reporting
         suite_result.save_as_html('data/08_reporting/model_eval_check.html')
         logger.error("model not pass evaluation tests")
         print("model not pass evaluation tests")
-
