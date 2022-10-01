@@ -148,18 +148,6 @@ def data_integrity_validation(data: pd.DataFrame,
     return data
 
 
-def validation_data(data: pd.DataFrame) -> pd.DataFrame:
-    context = ge.get_context()
-    result: CheckpointResult = context.run_checkpoint(checkpoint_name="check_datos",
-                                     batch_request = None,
-                                     run_name = None
-                                     )
-    if not result["success"]:
-        logger.error("Dataset not pass data validation tests")
-        raise Exception("Dataset not pass data validation tests")
-    return data
-
-
 def train_test_validation_dataset(x_train,
                                   x_test,
                                   y_train,

@@ -34,12 +34,6 @@ def create_pipeline(**kwargs) -> Pipeline:
                 outputs="data_integrity_check",
                 name="data_integrity_validation",
             ),
-            #node(
-            #    func=validation_data,
-            #    inputs="data_integrity_check",
-            #    outputs="data_check",
-            #    name="validation_data",
-            #),
             node(
                 func=split_data,
                 inputs=["data_integrity_check", "parameters"],
