@@ -6,6 +6,12 @@ This is your new Kedro project, which was generated using `Kedro 0.18.3`.
 
 Take a look at the [Kedro documentation](https://kedro.readthedocs.io) to get started.
 
+## PipeLine Code
+- ETL `src/readmission_ml_project_kedro/pipelines/etl`
+- Feature Engineering `src/readmission_ml_project_kedro/pipelines/feature_engineering`
+- Data Science `src/readmission_ml_project_kedro/pipelines/data_science`
+- Model Evaluation `src/readmission_ml_project_kedro/pipelines/model_evaluation`
+
 ## Rules and guidelines
 
 In order to get the best out of the template:
