@@ -1,0 +1,19 @@
+black~=22.0
+flake8>=3.7.9, <5.0
+ipython>=7.31.1, <8.0
+isort~=5.0
+kedro~=0.18.3
+kedro-telemetry~=0.2.0
+pytest-cov~=3.0
+pytest-mock>=1.7.1, <2.0
+pytest~=6.2
+
+deepchecks==0.9.0
+feature_engine==1.4.1
+kedro==0.18.3
+mlflow==1.29.0
+numpy==1.23.3
+pandas==1.5.0
+pytest==6.2.5
+scikit_learn==1.1.2
+setuptools==63.4.1
